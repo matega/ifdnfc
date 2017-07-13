@@ -420,11 +420,14 @@ IFDHCreateChannelByName(DWORD Lun, LPSTR DeviceName)
       strcpy(ifd_connstring, "usb:xxx:xxx");
       memcpy(ifd_connstring + 4, dirname, 3);
       memcpy(ifd_connstring + 8, filename, 3);
-      ifdnfc->device = nfc_open(context, ifd_connstring);
-      ifdnfc->connected = (ifdnfc->device) ? true : false;
-      ifdnfc->Lun = Lun;
     }
+  } else {
+    strcpy(ifd_connstring, DeviceName);
   }
+  ifdnfc->device = nfc_open(context, ifd_connstring);
+  ifdnfc->connected = (ifdnfc->device) ? true : false;
+  ifdnfc->Lun = Lun;
+
   free(vidpid);
   free(hpdriver);
   free(ifn);
